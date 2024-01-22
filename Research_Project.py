@@ -79,3 +79,8 @@ file26 = open("Z_people.json")
 Z_people = file26
 
 
+letters = ("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+
+for letter in letters:
+    file = open(f"{letter}_people.json")
+    people = file
