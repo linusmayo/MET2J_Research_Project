@@ -75,10 +75,15 @@ import json
 # file25 = open("Y_people.json")
 # Y_people = file25
 
+# file26 = open("Z_people.json")
+# Z_people = file26
 file26 = open("Z_people.json")
 Z_people = json.load(file26)
 
 # letters = ("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+
+
+letters = ("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 
 # people = []
 # for letter in letters:
