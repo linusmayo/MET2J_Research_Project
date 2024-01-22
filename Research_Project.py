@@ -8,5 +8,15 @@ for letter in letters:
      file = open(f"{letter}_people.json")
      people = json.load(file)
      for person in people:
-         if ("ontology/birthDate" or "ontology/birthYear") and ("artist" or "ontology/associatedMusicalArtist_label" or "ontology/occupation_label" or "ontology/profession_label") and ("ontology/birthPlace_label" or "ontology/nationality_label" or "ontology/stateOfOrigin_label") and ("ontology/instrument_label" or "ontology/occupation_label") in dic:
+         if ("ontology/birthDate" in person 
+            or "ontology/birthYear" in person) and \
+            ("ontology/associatedMusicalArtist_label" in person
+             or "ontology/profession_label" in person 
+             or "ontology/instrument_label" in person 
+             or "ontology/occupation_label" in person) and \
+            ("ontology/birthPlace_label" in person 
+             or "ontology/nationality_label" in person
+             or "ontology/stateOfOrigin_label" in person):
              relevantKeys.append(person)
+
+print(len(relevantKeys))
