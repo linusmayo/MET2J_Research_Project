@@ -11,7 +11,7 @@ for letter in letters:
      file = open(f"{letter}_people.json")
      people = json.load(file)
      for person in people:
-         if ("ontology/birthDate" in person 
+        if ("ontology/birthDate" in person 
             or "ontology/birthYear" in person) and \
             ("ontology/associatedMusicalArtist_label" in person
              or "ontology/profession_label" in person 
@@ -22,14 +22,11 @@ for letter in letters:
              or "ontology/stateOfOrigin_label" in person):
              relevantKeys.append(person)
 
-print(len(relevantKeys))
-         if ("ontology/birthDate" or "ontology/birthYear") and ("ontology/birthPlace_label" or "ontology/nationality_label" or "ontology/stateOfOrigin_label") and "ontology/instrument_label" in person:
-            for instrument in instruments:
-                if person["ontology/instrument_label" ] == instrument:
-                        
-                        if (person["ontology/birthDate"] >= datetime.date(1/1/1900) and person["ontology/birthDate"] <= datetime.date(31/12/1999)): 
-                            total_dictionary["20th Century"] = 
+        for instrument in instruments:
+            if person["ontology/instrument_label" ] == instrument:
+                                
+                if (person["ontology/birthDate"] >= datetime.date(1/1/1900) and person["ontology/birthDate"] <= datetime.date(31/12/1999)): 
+                    total_dictionary["20th Century"] = 
 
-
-                        if (person["ontology/birthDate"] >= datetime.date(1/1/2000) and person["ontology/birthDate"] <= datetime.date(31/12/2099)): 
-                            total_dictionary["21st Century"] =
+                if (person["ontology/birthDate"] >= datetime.date(1/1/2000) and person["ontology/birthDate"] <= datetime.date(31/12/2099)): 
+                    total_dictionary["21st Century"] =
