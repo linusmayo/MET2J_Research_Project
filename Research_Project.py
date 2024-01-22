@@ -4,7 +4,7 @@ import datetime
 letters = ("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 
 relevantKeys = []
-total_dictionary = {}
+total_list = []
 instruments = ("Drums", "Guitar", "Piano", "Keyboard", "Voice", "Bass","Violin","Cello","Bass guitar")
 
 for letter in letters:
@@ -21,12 +21,12 @@ for letter in letters:
              or "ontology/nationality_label" in person
              or "ontology/stateOfOrigin_label" in person):
              relevantKeys.append(person)
-
-        for instrument in instruments:
-            if person["ontology/instrument_label" ] == instrument:
-                                
-                if (person["ontology/birthDate"] >= datetime.date(1/1/1900) and person["ontology/birthDate"] <= datetime.date(31/12/1999)): 
-                    total_dictionary["20th Century"] = 
-
-                if (person["ontology/birthDate"] >= datetime.date(1/1/2000) and person["ontology/birthDate"] <= datetime.date(31/12/2099)): 
-                    total_dictionary["21st Century"] =
+    
+for person in relevantKeys:
+    person_new = {}
+    person_new["Name"] = person["title"]
+    person_new["Instrument"] = person["ontology/instrument_label"]
+    person_new["Country"] = person["ontology/stateOfOrigin_label"]
+    total_list.append(person_new)
+        
+print(total_list)
