@@ -13,20 +13,24 @@ for letter in letters:
      for person in people:
         if ("ontology/birthDate" in person 
             or "ontology/birthYear" in person) and \
-            ("ontology/associatedMusicalArtist_label" in person
-             or "ontology/profession_label" in person 
-             or "ontology/instrument_label" in person 
-             or "ontology/occupation_label" in person) and \
+            ("ontology/instrument_label" in person) and \
             ("ontology/birthPlace_label" in person 
-             or "ontology/nationality_label" in person
-             or "ontology/stateOfOrigin_label" in person):
+             or "ontology/nationality_label" in person):
              relevantKeys.append(person)
-    
+
 for person in relevantKeys:
     person_new = {}
     person_new["Name"] = person["title"]
-    person_new["Instrument"] = person["ontology/instrument_label"]
-    person_new["Country"] = person["ontology/stateOfOrigin_label"]
+    if "ontology/birthDate" in person: 
+        person_new["Date of Birth"] = person["ontology/birthDate"]
+    elif "ontology/birthYear" in person:
+        person_new["Date of Birth"] = person["ontology/birthYear"]
+    if "ontology/birthPlace" in person: 
+        person_new["Country"] = person["ontology/birthPlace"]
+    elif "ontology/nationality_label" in person: 
+        person_new["Country"] = person["ontology/nationality_label"]
+    person_new["Instrument"] = person["ontology/instrument_label"] 
+    
     total_list.append(person_new)
         
-print(total_list)
+print(len(total_list))
