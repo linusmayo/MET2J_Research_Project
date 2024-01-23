@@ -4,8 +4,6 @@ import csv
 letters = ("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 
 relevantKeys = []
-total_list = []
-instruments = ("Drums", "Guitar", "Piano", "Keyboard", "Voice", "Bass","Violin","Cello","Bass guitar")
 
 for letter in letters:
      file = open(f"{letter}_people.json")
@@ -14,9 +12,12 @@ for letter in letters:
         if ("ontology/birthDate" in person 
             or "ontology/birthYear" in person) and \
             ("ontology/instrument_label" in person) and \
-            ("ontology/birthPlace_label" in person 
-             or "ontology/nationality_label" in person):
+            ("ontology/birthPlace_label" in person):
              relevantKeys.append(person)
+
+print(len(relevantKeys))
+
+total_list = []
 
 for person in relevantKeys:
     person_new = {}
@@ -25,7 +26,7 @@ for person in relevantKeys:
         person_new["Date of Birth"] = person["ontology/birthDate"]
     elif "ontology/birthYear" in person:
         person_new["Date of Birth"] = person["ontology/birthYear"]
-    if "ontology/birthPlace" in person: 
+    if "ontology/birthPlace_label" in person: 
         person_new["Country"] = person["ontology/birthPlace"]
     elif "ontology/nationality_label" in person: 
         person_new["Country"] = person["ontology/nationality_label"]
@@ -33,7 +34,7 @@ for person in relevantKeys:
     
     total_list.append(person_new)
 
-data_file = open('MET2J_Data.csv', 'w', newline='')
+data_file = open('MET2J_Data.csv', 'w', encoding= 'utf-8', newline='')
 csv_writer = csv.writer(data_file)
  
 count = 0
