@@ -28,7 +28,10 @@ for person in relevantKeys:
         person_new["Country"] = person["ontology/birthPlace_label"]
     elif "ontology/nationality_label" in person: 
         person_new["Country"] = person["ontology/nationality_label"]
-    person_new["Instrument"] = person["ontology/instrument_label"] 
+    if isinstance(person["ontology/instrument_label"], list): 
+        person_new["Instrument"] = person["ontology/instrument_label"][0]
+    else:
+        person_new["Instrument"] = person["ontology/instrument_label"] 
     
     total_list.append(person_new)
 
