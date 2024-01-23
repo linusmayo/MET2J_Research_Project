@@ -1,5 +1,5 @@
 import json
-import datetime
+import csv
 
 letters = ("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 
@@ -32,5 +32,16 @@ for person in relevantKeys:
     person_new["Instrument"] = person["ontology/instrument_label"] 
     
     total_list.append(person_new)
-        
-print(len(total_list))
+
+data_file = open('MET2J_Data.csv', 'w', newline='')
+csv_writer = csv.writer(data_file)
+ 
+count = 0
+for data in total_list:
+    if count == 0:
+        header = data.keys()
+        csv_writer.writerow(header)
+        count += 1
+    csv_writer.writerow(data.values())
+ 
+data_file.close()
