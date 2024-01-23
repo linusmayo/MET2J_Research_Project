@@ -72,19 +72,27 @@ filtered_full_data <- full_data |>
   select(-`Date of Birth`, )|>
   write_csv("Cleaned_Instruments.csv")
 
-Guitar <- filtered_full_data |>
-  filter(Instrument == "Guitar")
+Filtered_instruments <- filtered_full_data |>
+  filter(Instrument == "Piano" | Instrument == "Guitar" | Instrument =="Music software" | Instrument == "Voice" | Instrument == "Drums")|>
+  filter(Country == "United States")
 
-Piano <- filtered_full_data |>
-  filter(Instrument == "Piano")
+plot_data <- Filtered_instruments |>
+  group_by(Decade, Instrument) |>
+  summarize(count = n()) |>
+  ungroup()
 
-ggplot(data = Piano) +
-  geom_line(aes(x = Decade, y = Piano, color = "red"))
+ggplot(data = plot_data, aes(x = Decade, y = count, color = Instrument, group = Instrument)) +
+  geom_line() +
+  labs(title = "Instrument Counts in 20th Century",
+       x = "Decade",
+       y = "Instrument counts") 
+
+ggsave("Instrument count per decade.pdf")
+
+
+
 
 
  
-#pivoted_instruments <- filtered_full_data |>
-  #pivot_wider(names_from = Instrument, values_from = Country)
-
 
 
