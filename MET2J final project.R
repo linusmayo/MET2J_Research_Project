@@ -47,8 +47,9 @@ filtered_full_data <- full_data |>
   mutate(Instrument = recode(Instrument, "Music Man (company)" = "Bass guitar", 
                              "Fender Jazz Bass" = "Bass guitar", "Slapping (music)" = "Bass guitar", 
                              "Fender Precision Bass" = "Bass guitar", "Double bass" = "Bass guitar", 
-                             "Fender Mustang Bass" = "Bass guitar", "Wal (bass)" = "Bass guitar")) |>
-  mutate(Instrument = recode(Instrument, "Electric violin" = "Violin")) |>
+                             "Fender Mustang Bass" = "Bass guitar", "Wal (bass)" = "Bass guitar",
+                             "Fender Roscoe Beck Bass" = "Bass guitar")) |>
+  mutate(Instrument = recode(Instrument, "Electric violin" = "Violin", "Antonio Stradvan" = "Violin")) |>
   mutate(Instrument = recode(Instrument, "Multi-instrumentalist" = "Orchestra")) |>
   mutate(Instrument = recode(Instrument, "Hohner" = "Harmonica")) |>
   mutate(Instrument = recode(Instrument, "Programming (music)" = "Music software",  
@@ -68,13 +69,22 @@ filtered_full_data <- full_data |>
                                "Noble & Cooley" = "Drums", "Tom-tom drum" = "Drums", 
                                "Mapex Drums" = "Drums", "Drum kit" = "Drums")) |>
   mutate(Instrument = recode(Instrument, "Types of trombone" = "Trombone", "C.G. Conn" = "Trombone")) |>
-  group_by(Decade) |>
-  select(-`Date of Birth`)|>
+  select(-`Date of Birth`, )|>
   write_csv("Cleaned_Instruments.csv")
+
+Guitar <- filtered_full_data |>
+  filter(Instrument == "Guitar")
+
+Piano <- filtered_full_data |>
+  filter(Instrument == "Piano")
+
+ggplot(data = Piano) +
+  geom_line(aes(x = Decade, y = Piano, color = "red"))
+
+
  
 #pivoted_instruments <- filtered_full_data |>
   #pivot_wider(names_from = Instrument, values_from = Country)
 
-print(filtered_full_data, n=20)
 
 
