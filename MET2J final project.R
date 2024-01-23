@@ -18,15 +18,11 @@ filtered_full_data <- full_data |>
     startsWith(as.character(`Date of Birth`), "199") ~ "1990s",
   TRUE ~ as.character(`Date of Birth`)  )) |>
   group_by(Decade) |>
-  select(-`Date of Birth`)
-    
-  
+  select(-`Date of Birth`) 
  
-  
-  
-  
-  
-  
-print(filtered_full_data)
+#pivoted_instruments <- filtered_full_data |>
+  #pivot_wider(names_from = Instrument, values_from = Country )
+
+print(filtered_full_data, n=20)
 
 
