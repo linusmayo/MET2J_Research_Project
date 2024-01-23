@@ -15,8 +15,6 @@ for letter in letters:
             ("ontology/birthPlace_label" in person):
              relevantKeys.append(person)
 
-print(len(relevantKeys))
-
 total_list = []
 
 for person in relevantKeys:
@@ -27,14 +25,14 @@ for person in relevantKeys:
     elif "ontology/birthYear" in person:
         person_new["Date of Birth"] = person["ontology/birthYear"]
     if "ontology/birthPlace_label" in person: 
-        person_new["Country"] = person["ontology/birthPlace"]
+        person_new["Country"] = person["ontology/birthPlace_label"]
     elif "ontology/nationality_label" in person: 
         person_new["Country"] = person["ontology/nationality_label"]
     person_new["Instrument"] = person["ontology/instrument_label"] 
     
     total_list.append(person_new)
 
-data_file = open('MET2J_Data.csv', 'w', encoding= 'utf-8', newline='')
+data_file = open('MET2J_filtered_instruments.csv', 'w', encoding= 'utf-8', newline='')
 csv_writer = csv.writer(data_file)
  
 count = 0
