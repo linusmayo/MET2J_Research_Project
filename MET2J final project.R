@@ -4,7 +4,7 @@ full_data <-read_csv('MET2J_filtered_instruments.csv')
 
 filtered_full_data <- full_data |>
   na.omit() |>
-  filter(`Date of Birth`>= 1900, `Date of Birth` <= 2000 ) |>
+  filter(`Date of Birth`>= 1900, `Date of Birth` <= 1999 ) |>
   mutate(Decade = case_when(
     startsWith(as.character(`Date of Birth`), "190") ~ "1900s",
     startsWith(as.character(`Date of Birth`), "191") ~ "1910s",
@@ -81,11 +81,13 @@ plot_data <- Filtered_instruments |>
   summarize(count = n()) |>
   ungroup()
 
-ggplot(data = plot_data, aes(x = Decade, y = count, color = Instrument, group = Instrument)) +
+ggplot(data = plot_data) + 
+  aes(x = Decade, y = count, color = Instrument, group = Instrument) +
   geom_line() +
   labs(title = "Instrument Counts in 20th Century",
        x = "Decade",
-       y = "Instrument counts") 
+       y = "Instrument counts") +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
 
 ggsave("Instrument count per decade.pdf")
 
