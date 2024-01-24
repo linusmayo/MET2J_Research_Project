@@ -4,18 +4,18 @@ full_data <-read_csv('MET2J_filtered_instruments.csv')
 
 filtered_full_data <- full_data |>
   na.omit() |>
-  filter(`Date of Birth`>= 1900, `Date of Birth` <= 1999 ) |>
+  filter(`Date of Birth`>= 1880, `Date of Birth` <= 1979) |>
   mutate(Decade = case_when(
-    startsWith(as.character(`Date of Birth`), "190") ~ "1900s",
-    startsWith(as.character(`Date of Birth`), "191") ~ "1910s",
-    startsWith(as.character(`Date of Birth`), "192") ~ "1920s",
-    startsWith(as.character(`Date of Birth`), "193") ~ "1930s",
-    startsWith(as.character(`Date of Birth`), "194") ~ "1940s",
-    startsWith(as.character(`Date of Birth`), "195") ~ "1950s",
-    startsWith(as.character(`Date of Birth`), "196") ~ "1960s",
-    startsWith(as.character(`Date of Birth`), "197") ~ "1970s",
-    startsWith(as.character(`Date of Birth`), "198") ~ "1980s",
-    startsWith(as.character(`Date of Birth`), "199") ~ "1990s",
+    startsWith(as.character(`Date of Birth`), "188") ~ "1900s",
+    startsWith(as.character(`Date of Birth`), "189") ~ "1910s",
+    startsWith(as.character(`Date of Birth`), "190") ~ "1920s",
+    startsWith(as.character(`Date of Birth`), "191") ~ "1930s",
+    startsWith(as.character(`Date of Birth`), "192") ~ "1940s",
+    startsWith(as.character(`Date of Birth`), "193") ~ "1950s",
+    startsWith(as.character(`Date of Birth`), "194") ~ "1960s",
+    startsWith(as.character(`Date of Birth`), "195") ~ "1970s",
+    startsWith(as.character(`Date of Birth`), "196") ~ "1980s",
+    startsWith(as.character(`Date of Birth`), "197") ~ "1990s",
   TRUE ~ as.character(`Date of Birth`)  )) |>
   mutate(Instrument = recode(Instrument,"Singing"= "Voice", "Microphone" = "Voice", 
                                                     "Lead vocalist" = "Voice", "Human voice" = "Voice", 
@@ -68,19 +68,32 @@ filtered_full_data <- full_data |>
                                "Noble & Cooley" = "Drums", "Tom-tom drum" = "Drums", 
                                "Mapex Drums" = "Drums", "Drum kit" = "Drums")) |>
   mutate(Instrument = recode(Instrument, "Types of trombone" = "Trombone", "C.G. Conn" = "Trombone")) |>
-  select(-`Date of Birth`, )|>
+  mutate(Genre = recode(Genre, "Alternative rock" = "Rock music", "Rock and roll" = "Rock music", 
+                        "Pop rock" = "Rock music")) |>
+  mutate(Genre = recode(Genre, "House music" = "Electronic music")) |>
+  select(-`Date of Birth`)|>
   write_csv("Cleaned_Instruments.csv")
 
 Filtered_instruments <- filtered_full_data |>
-  filter(Instrument == "Piano" | Instrument == "Guitar" | Instrument =="Music software" | Instrument == "Voice" | Instrument == "Drums")
+  filter(Instrument == "Piano" | Instrument == "Guitar" | Instrument =="Music software" | 
+           Instrument == "Voice" | Instrument == "Drums")
 
-plot_data <- Filtered_instruments |>
+Filtered_genres <- filtered_full_data |>
+  filter(Genre == "Jazz" | Genre == "Country music" | Genre == "Rock music"|
+         Genre == "Pop music" | Genre == "Electronic music")
+
+plot_data1 <- Filtered_instruments |>
   group_by(Decade, Instrument) |>
-  summarize(count = n()) |>
+  summarize(count1 = n()) |>
   ungroup()
 
-ggplot(data = plot_data) + 
-  aes(x = Decade, y = count, color = Instrument, group = Instrument) +
+plot_data2 <- Filtered_genres |>
+  group_by(Decade, Genre) |>
+  summarize(count2 = n()) |>
+  ungroup()
+
+ggplot(data = plot_data1) + 
+  aes(x = Decade, y = count1, color = Instrument, group = Instrument) +
   geom_line() +
   labs(title = "Instrument Counts in the 20th Century",
        x = "Decade",
@@ -88,6 +101,14 @@ ggplot(data = plot_data) +
   theme(plot.title = element_text(face = "bold", hjust = 0.5))
 
 ggsave("Instrument count per decade.pdf")
+
+ggplot(data = plot_data2) +
+  aes(x = Decade, y = count2, color = Genre, group = Genre) + 
+  geom_line()
+
+ggsave("Genre count per decade.pdf")
+
+
 
 
 
