@@ -48,7 +48,7 @@ filtered_full_data <- full_data |>
                              "Fender Jazz Bass" = "Bass guitar", "Slapping (music)" = "Bass guitar", 
                              "Fender Precision Bass" = "Bass guitar", "Double bass" = "Bass guitar", 
                              "Fender Mustang Bass" = "Bass guitar", "Wal (bass)" = "Bass guitar",
-                             "Fender Roscoe Beck Bass" = "Bass guitar")) |>
+                             "Fender Roscoe Beck Bass" = "Bass guitar", "Ampeg" = "Bass guitar")) |>
   mutate(Instrument = recode(Instrument, "Electric violin" = "Violin", "Antonio Stradvan" = "Violin")) |>
   mutate(Instrument = recode(Instrument, "Multi-instrumentalist" = "Orchestra")) |>
   mutate(Instrument = recode(Instrument, "Hohner" = "Harmonica")) |>
@@ -56,8 +56,7 @@ filtered_full_data <- full_data |>
                              "Deejay (Jamaican)" = "Music software", "Reason (software)" = "Music software", 
                              "Vox (musical equipment)" = "Music software", "Logic Pro" = "Music software",  
                              "Sampler (musical instrument)" = "Music software", 
-                             "DJ mixer" = "Music software", "Turntablism" = "Music software", 
-                             "Ampeg" = "Music software", "FL Studio" = "Music software",  
+                             "DJ mixer" = "Music software", "Turntablism" = "Music software", "FL Studio" = "Music software",  
                              "Skoog" = "Music software", "Sampler (musical instrument)" = "Music software", 
                              "Electronic musical instrument" = "Music software", 
                              "Digital audio workstation" = "Music software", "Programmer" = "Music software", 
@@ -73,8 +72,7 @@ filtered_full_data <- full_data |>
   write_csv("Cleaned_Instruments.csv")
 
 Filtered_instruments <- filtered_full_data |>
-  filter(Instrument == "Piano" | Instrument == "Guitar" | Instrument =="Music software" | Instrument == "Voice" | Instrument == "Drums")|>
-  filter(Country == "United States")
+  filter(Instrument == "Piano" | Instrument == "Guitar" | Instrument =="Music software" | Instrument == "Voice" | Instrument == "Drums")
 
 plot_data <- Filtered_instruments |>
   group_by(Decade, Instrument) |>
@@ -84,9 +82,9 @@ plot_data <- Filtered_instruments |>
 ggplot(data = plot_data) + 
   aes(x = Decade, y = count, color = Instrument, group = Instrument) +
   geom_line() +
-  labs(title = "Instrument Counts in 20th Century",
+  labs(title = "Instrument Counts in the 20th Century",
        x = "Decade",
-       y = "Instrument counts") +
+       y = "Instrument Counts") +
   theme(plot.title = element_text(face = "bold", hjust = 0.5))
 
 ggsave("Instrument count per decade.pdf")
