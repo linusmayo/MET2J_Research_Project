@@ -1,27 +1,26 @@
 library(tidyverse)
 library(tidyr)
 full_data <-read_csv('MET2J_filtered_instruments.csv')
-new_dataset <- read_csv("Genre.csv")
+genre_data <- read_csv("Genre.csv")
 
-shaped_new_dataset <- new_dataset |>
-  gather("Year", "Percentage", -"Primary Genre") |>
-  pivot_wider(names_from = "Primary Genre", values_from = "Percentage")
+genres_filter <- genre_data |>
+  pivot_longer(cols=-'Primary Genre', names_to="Year", values_to="Percentage") |>
+  mutate(Year1 = as.numeric(Year)) |>
+  filter(Year1 >= 1960, Year1 <= 2000) |>
+  mutate(Decade1 = round(Year1/5)*5) |>
+  select(-Year, -Year1) |>
+  mutate(Percentage2 = as.numeric(Percentage))
+  group_by("Decade1") |>
+  summarise(sum_perc = sum(Percentage2))
+  
+
+print(genres_filter)
 
 filtered_full_data <- full_data |>
   na.omit() |>
-  filter(`Date of Birth`>= 1900, `Date of Birth` <= 1999) |>
-  mutate(Decade = case_when(
-    startsWith(as.character(`Date of Birth`), "190") ~ "1900s",
-    startsWith(as.character(`Date of Birth`), "191") ~ "1910s",
-    startsWith(as.character(`Date of Birth`), "192") ~ "1920s",
-    startsWith(as.character(`Date of Birth`), "193") ~ "1930s",
-    startsWith(as.character(`Date of Birth`), "194") ~ "1940s",
-    startsWith(as.character(`Date of Birth`), "195") ~ "1950s",
-    startsWith(as.character(`Date of Birth`), "196") ~ "1960s",
-    startsWith(as.character(`Date of Birth`), "197") ~ "1970s",
-    startsWith(as.character(`Date of Birth`), "198") ~ "1980s",
-    startsWith(as.character(`Date of Birth`), "199") ~ "1990s",
-  TRUE ~ as.character(`Date of Birth`)  )) |>
+  mutate(Year2 = as.numeric(`Date of Birth`)) |>
+  filter(Year2>= 1960, Year2 <= 2000) |>
+  mutate(Decade2 = round(Year2/5)*5) |>
   mutate(Instrument = recode(Instrument,"Singing"= "Voice", "Microphone" = "Voice", 
                                                     "Lead vocalist" = "Voice", "Human voice" = "Voice", 
                                                     "Vocal music" = "Voice", "Soprano" = "Voice", 
@@ -73,52 +72,38 @@ filtered_full_data <- full_data |>
                                "Noble & Cooley" = "Drums", "Tom-tom drum" = "Drums", 
                                "Mapex Drums" = "Drums", "Drum kit" = "Drums")) |>
   mutate(Instrument = recode(Instrument, "Types of trombone" = "Trombone", "C.G. Conn" = "Trombone")) |>
-  mutate(Genre = recode(Genre, "Hard rock" = "Rock music", "Folk" = "Rock music", 
-                        "Pop rock" = "Rock music", "Punk rock" = "Rock music", "Indie rock" = "Rock music",)) |>
-  mutate(Genre = recode(Genre, "Modal Jazz" = "Jazz", "Free jazz" = "Jazz", 
-                        "Smooth jazz" = "Jazz", "Mainstream jazz"= "Jazz")) |>
-  mutate(Genre = recode(Genre, "Electric blues" = "Blues", "Country Blues" = "Blues", 
-                        "Chicago Blues" = "Blues")) |>
-  mutate(Genre = recode(Genre, "House music" = "Electronic music")) |>
-  select(-`Date of Birth`)|>
   write_csv("Cleaned_Instruments.csv")
 
 Filtered_instruments <- filtered_full_data |>
   filter(Instrument == "Piano" | Instrument == "Guitar" | Instrument =="Music software" | 
            Instrument == "Voice" | Instrument == "Drums")
 
-Filtered_genres <- filtered_full_data |>
-  filter(Genre == "Jazz" | Genre == "Country music" | Genre == "Rock music"|
-         Genre == "Pop music" | Genre == "Electronic music" | Genre == "Blues")
 
-plot_data1 <- Filtered_instruments |>
-  group_by(Decade, Instrument) |>
+plot_instruments <- Filtered_instruments |>
+  group_by(Decade2, Instrument) |>
   summarize(count1 = n()) |>
   ungroup()
 
-plot_data2 <- Filtered_genres |>
-  group_by(Decade, Genre) |>
-  summarize(count2 = n()) |>
-  ungroup()
+print(genres_filter)
 
-ggplot(data = plot_data1) + 
-  aes(x = Decade, y = count1, color = Instrument, group = Instrument) +
+
+
+ggplot(data = plot_instruments) + 
+  aes(x = Decade2, y = count1, color = Instrument, group = Instrument) +
   geom_line() +
   labs(title = "Instrument Counts in the 20th Century",
        x = "Decade",
        y = "Instrument Counts") +
   theme(plot.title = element_text(face = "bold", hjust = 0.5))
-
 ggsave("Instrument count per decade.pdf")
 
-ggplot(data = plot_data2) +
-  aes(x = Decade, y = count2, color = Genre, group = Genre) + 
-  geom_line() +
-  labs(title = "Genre Count in the 20th Century",
-       x = "Decade",
-       y = "Genre Count") +
-  theme(plot.title = element_text(face = "bold", hjust = 0.5))
-ggsave("Genre count per decade.pdf")
+
+ggplot(data = pivoted_genre_dataset) + 
+  aes(x = Decade1, y = Percentage, color = Genre) +
+  geom_line() 
+
+
+
 
 
 
