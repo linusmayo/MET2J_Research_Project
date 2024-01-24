@@ -24,10 +24,10 @@ for person in relevantKeys:
     if isinstance(person["ontology/birthPlace_label"], list): 
         for i in range(len(person["ontology/birthPlace_label"])):
             if person["ontology/birthPlace_label"][i] in US:
-                person_new["Country"] = person["ontology/birthPlace_label"][i]
+                person_new["US / US_state"] = person["ontology/birthPlace_label"][i]
     else: 
         if person["ontology/birthPlace_label"] in US: 
-            person_new["Country"] = person["ontology/birthPlace_label"]
+            person_new["US / US_state"] = person["ontology/birthPlace_label"]
     if isinstance(person["ontology/instrument_label"], list): 
         person_new["Instrument"] = person["ontology/instrument_label"][0]
     else:
