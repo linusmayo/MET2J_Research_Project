@@ -11,8 +11,7 @@ for letter in letters:
      for person in people:
         if ("ontology/birthYear" in person) and \
             ("ontology/instrument_label" in person) and \
-            ("ontology/birthPlace_label" in person) and \
-            ("ontology/genre_label" in person):
+            ("ontology/birthPlace_label" in person):
             relevantKeys.append(person)
 
 print(len(relevantKeys))
@@ -35,15 +34,11 @@ for person in relevantKeys:
         person_new["Instrument"] = person["ontology/instrument_label"][0]
     else:
         person_new["Instrument"] = person["ontology/instrument_label"] 
-    if isinstance(person["ontology/genre_label"], list):
-        person_new["Genre"] = person["ontology/genre_label"][0]
-    else:
-        person_new["Genre"] = person["ontology/genre_label"]
     
     total_list.append(person_new)
 
 with open('MET2J_filtered_instruments.csv', 'w', encoding= 'utf-8', newline='') as data_file:
-    csv_writer = csv.DictWriter(data_file, ["Name", "Date of Birth", "Country", "Instrument", "Genre"])
+    csv_writer = csv.DictWriter(data_file, ["Name", "Date of Birth", "US / US_state", "Instrument"])
     csv_writer.writeheader()
 
     for data in total_list:
