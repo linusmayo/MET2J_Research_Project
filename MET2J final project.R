@@ -1,6 +1,11 @@
 library(tidyverse)
 library(tidyr)
 full_data <-read_csv('MET2J_filtered_instruments.csv')
+new_dataset <- read_csv("Genre.csv")
+
+shaped_new_dataset <- new_dataset |>
+  gather("Year", "Percentage", -"Primary Genre") |>
+  pivot_wider(names_from = "Primary Genre", values_from = "Percentage")
 
 filtered_full_data <- full_data |>
   na.omit() |>
