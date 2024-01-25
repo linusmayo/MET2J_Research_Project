@@ -146,7 +146,7 @@ plot_guitar <- ggplot() +
   geom_line(data = rock_data, aes(x = Quinquennial, y = Percentage, color = "Rock"), linewidth = 1.5) +
   scale_y_continuous(sec.axis = dup_axis(name = "Guitar prevalence (%)")) +
   scale_color_manual(values = c("Guitar" = "darkgreen", "Rock" = "lightblue")) +
-  labs(x= "Years", y="Rock prevalence (%)", title="Relationship between Rock and Guitar", color = "Legend") +
+  labs(x= "Years", y="Rock prevalence (%)", title="", color = "Legend") +
   labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
@@ -169,7 +169,7 @@ plot_banjo <- ggplot() +
   geom_line(data = folk_data, aes(x = Quinquennial, y = Percentage, color = "Folk"), linewidth = 1.5) +
   scale_y_continuous(sec.axis = dup_axis(name = "Banjo prevalence (%)")) +
   scale_color_manual(values = c("Banjo" = "orange3", "Folk" = "magenta3")) +
-  labs(x= "Years", y="Folk prevalence (%)", title="Relationship between Folk and Banjo", color = "Legend") +
+  labs(x= "Years", y="Folk prevalence (%)", title="", color = "Legend") +
   labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
@@ -192,7 +192,7 @@ plot_software <- ggplot() +
   geom_line(data = house_data, aes(x = Quinquennial, y = Percentage, color = "House/Electronic/Trance"), linewidth = 1.5) +
   scale_y_continuous(sec.axis = dup_axis(name = "Music software prevalence (%)")) +
   scale_color_manual(values = c("Music software" = "purple", "House/Electronic/Trance" = "grey")) +
-  labs(x= "Years", y="House/Electronic/Trance prevalence (%)", title="Relationship between Electronic music and Music software", color = "Legend") +
+  labs(x= "Years", y="Software prevalence (%)", color = "Legend") +
   labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
@@ -215,7 +215,7 @@ plot_voice <- ggplot() +
   geom_line(data = pop_data, aes(x = Quinquennial, y = Percentage, color = "Pop"), linewidth = 1.5) +
   scale_y_continuous(sec.axis = dup_axis(name = "Voice prevalence (%)")) +
   scale_color_manual(values = c(Pop = "lightgreen", Voice = "red3")) +
-  labs(x= "Years", y="Pop prevalence (%)", title="Relationship between Pop and Voice", color = "Legend") +
+  labs(x= "Years", y="Pop prevalence (%)", title= "", color = "Legend") +
   labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
@@ -238,7 +238,7 @@ plot_piano <- ggplot() +
   geom_line(data = jazz_data, aes(x = Quinquennial, y = Percentage, color = "Jazz"), linewidth = 1.5) +
   scale_color_manual(values = c(Piano = "blue3", Jazz = "gold")) +
   scale_y_continuous(sec.axis = dup_axis(name = "Piano prevalence (%)")) +
-  labs(x= "Years", y="Jazz prevalence (%)", title="Relationship between Jazz and Piano", color = "Legend") +
+  labs(x= "Years", y="Jazz prevalence (%)", title="", color = "Legend") +
   labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
@@ -247,4 +247,13 @@ plot_piano <- ggplot() +
   geom_segment(aes(x = 1980, y = 0, xend = 1980, yend = 12.3),linetype="dashed", color = "black")
 
 ggsave("Jazz-Piano.pdf")
+
+
+#--------------------COMBINING ALL DIFFERENT INDIVIDUAL GRAPHS------------------
+
+plot_grid(plot_guitar, plot_banjo, plot_software, plot_voice, plot_piano, nrow = 5, align = "v", rel_heights = 1)
+
+ggsave("Comparison_Plot1.pdf",height = 10, width = 8)
+
+
 
