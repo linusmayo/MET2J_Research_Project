@@ -81,7 +81,7 @@ filtered_instruments <- full_data |>
 plot_instruments <- ggplot(data = filtered_instruments) +
   aes(x = Quinquennial, y = PercentageInstrument, color = Instrument, group = Instrument) +
   geom_line(linewidth = 1) +
-  labs(x = "Years", y = "Percentage", title = "Intrument prevalence between 1960 and 1995") +
+  labs(x = "Years", y = "Percentage") +
   xlim(c(1960, 1995)) +
   ylim(c(0, 35)) +
   theme_light() +
@@ -93,7 +93,7 @@ plot_instruments <- ggplot(data = filtered_instruments) +
     "Guitar" = "darkgreen",
     "Voice" = "indianred3"
   ))
-ggsave("Instruments.pdf")
+ggsave("Instruments.pdf", width = 12, height = 8, units = "cm")
 
 #------------------------------------GENRES-------------------------------------
 
@@ -115,7 +115,7 @@ filtered_genres <- genre_data |>
 #Plotting data with geom line
 plot_genres <- ggplot(data = filtered_genres, aes(x = Quinquennial, y = Percentage, color = `Primary Genre`)) +
   geom_line(linewidth = 1) +
-  labs(x= "Years", y="Percentage of songs in Billboard 100", title="Top genres between 1960 and 1995") +
+  labs(x= "Years", y="Percentage of songs in Billboard 100") +
   xlim(c(1960, 1995)) +
   theme_light() +
   theme(plot.title = element_text(face="bold"))+
@@ -126,7 +126,7 @@ plot_genres <- ggplot(data = filtered_genres, aes(x = Quinquennial, y = Percenta
     "Rock" = "lightblue",
     "Folk" = "magenta3"
   ))
-ggsave("Genres.pdf")
+ggsave("Genres.pdf", width = 12, height = 8, units = "cm")
 
 #----------------------DOUBLE PLOT: INSTRUMENTS & GENRES------------------------
 
@@ -192,7 +192,7 @@ plot_software <- ggplot() +
   geom_line(data = house_data, aes(x = Quinquennial, y = Percentage, color = "House/Electronic/Trance"), linewidth = 1.5) +
   scale_y_continuous(sec.axis = dup_axis(name = "Music software prevalence (%)")) +
   scale_color_manual(values = c("Music software" = "purple", "House/Electronic/Trance" = "grey")) +
-  labs(x= "Years", y="Software prevalence (%)", color = "Legend") +
+  labs(x= "Years", y="Electronic Music prevalence (%)", color = "Legend") +
   labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
