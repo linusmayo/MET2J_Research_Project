@@ -20,7 +20,7 @@ genres_filter <- genre_data |>
 # Plotting data with geom lind
 plot_genres <- ggplot(data = genres_filter, aes(x = Quinquiennial, y = Percentage, color = `Primary Genre`)) + 
   geom_line(linewidth = 1.2) +
-  labs(x= "1960-2000", y="Percentage of Hot 100 entry", title="Top Genres between 1960 and 2000", subtitle="do we need a subtitle?") +
+  labs(x= "Years", y="Percentage of Hot 100 entry", title="Top Genres between 1960 and 2000") +
   theme_light() +
   theme(plot.title = element_text(face="bold"))+
   scale_color_manual(values = c(
@@ -53,7 +53,7 @@ filtered_full_data <- full_data |>
   mutate(Instrument = recode(Instrument,"pianist" = "Piano", "Steinway & Sons" = "Piano", 
                              "Rhodes piano" = "Piano", "Baldwin Piano Company" = "Piano", 
                              "List of Korg products" = "Piano", "Keyboard instrument" = "Piano", 
-                             "Fairlight CMI" = "Piano")) |>
+                             "Fairlight CMI" = "Piano", "Pianist" = "Piano")) |>
   mutate(Instrument = recode(Instrument, "Guitarist" = "Guitar", "PRS guitars" = "Guitar", 
                              "Ibanez" = "Guitar", "Acoustic guitar" = "Guitar", 
                              "ESP Guitars" = "Guitar", "Yamaha electric guitar models" = "Guitar", 
@@ -69,7 +69,7 @@ filtered_full_data <- full_data |>
                              "First Act" = "Guitar", "Lap steel guitar" = "Guitar", "Electric guitar" = "Guitar", 
                              "Steinberger" = "Guitar", "Gibson ES-335" = "Guitar", "Gibson Ripper" = "Guitar", 
                              "Jackson Guitars" = "Guitar", "Gibson Flying V" = "Guitar", "Fender Jaguar" = "Guitar", 
-                             "Classical guitar" = "Guitar")) |>
+                             "Classical guitar" = "Guitar", "Guild Guitar Company" = "Guitar", "Modulus Guitars" = "Guitar")) |>
   mutate(Instrument = recode(Instrument, "Music Man (company)" = "Bass guitar", 
                              "Fender Jazz Bass" = "Bass guitar", "Slapping (music)" = "Bass guitar", 
                              "Fender Precision Bass" = "Bass guitar", "Double bass" = "Bass guitar", 
@@ -86,17 +86,17 @@ filtered_full_data <- full_data |>
                              "Skoog" = "Music software", "Sampler (musical instrument)" = "Music software", 
                              "Electronic musical instrument" = "Music software", 
                              "Digital audio workstation" = "Music software", "Programmer" = "Music software", 
-                             "Game Boy music" = "Music software")) |>
+                             "Game Boy music" = "Music software", "Ableton Live" = "Music software")) |>
   mutate(Instrument = recode(Instrument, "Drum" = "Drums" , "Bass drum" = "Drums", 
                              "Drum machine" = "Drums", "Sabian" = "Drums", 
                              "Drum Workshop" = "Drums", "Drum" = "Drums", 
                              "Gretsch Drums" = "Drums", "Percussion instrument" = "Drums", 
                              "Noble & Cooley" = "Drums", "Tom-tom drum" = "Drums", 
-                             "Mapex Drums" = "Drums", "Drum kit" = "Drums")) |>
+                             "Mapex Drums" = "Drums", "Drum kit" = "Drums", "Ludwig Drums" = "Drums" )) |>
   mutate(Instrument = recode(Instrument, "Types of trombone" = "Trombone", "C.G. Conn" = "Trombone")) |>
   #Choosing the relevant instruments 
-  filter(Instrument == "Piano" | Instrument == "Guitar" | Instrument =="Music software" | 
-           Instrument == "Voice") |>
+  #filter(Instrument == "Piano" | Instrument == "Guitar" | Instrument =="Music software" | 
+           #Instrument == "Banjo") |>
   #Counting instruments per every five years to plot e.g. 'total guitars in 1965' 
   group_by(Quinquiennial, Instrument) |>
   summarize(count1 = n()) |>
@@ -106,13 +106,13 @@ filtered_full_data <- full_data |>
 plot_instruments <- ggplot(data = filtered_full_data) + 
   aes(x = Quinquiennial, y = count1, color = Instrument, group = Instrument) +
   geom_line(linewidth = 1.2) +
-  labs(x= "1960-2000", y="Instrument count", title="Instruments use count between 1960 and 2000", subtitle="do we need a subtitle?") +
+  labs(x= "Years", y="Instrument count", title="Instruments use count between 1960 and 2000") +
   theme_light() +
   theme(plot.title = element_text(face="bold"))+
   scale_color_manual(values = c(
     "Music software" = "blue",
     "Piano" = "gold",
-    "Voice" = "purple3",
+    "Banjo" = "purple3",
     "Guitar" = "forestgreen"
   ))
 
