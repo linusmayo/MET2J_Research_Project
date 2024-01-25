@@ -88,7 +88,7 @@ filtered_full_data <- full_data |>
                              "Skoog" = "Music software", "Sampler (musical instrument)" = "Music software", 
                              "Electronic musical instrument" = "Music software", 
                              "Digital audio workstation" = "Music software", "Programmer" = "Music software", 
-                             "Game Boy music" = "Music software", "Ableton Live" = "Music software")) |>
+                             "Game Boy music" = "Music software", "Ableton Live" = "Music software", "Ableton Live" = "Music software","Synthesizer" = "Music software" )) |>
   mutate(Instrument = recode(Instrument, "Drum" = "Drums" , "Bass drum" = "Drums", 
                              "Drum machine" = "Drums", "Sabian" = "Drums", 
                              "Drum Workshop" = "Drums", "Drum" = "Drums", 
@@ -105,6 +105,8 @@ filtered_full_data <- full_data |>
   group_by(Quinquiennial, Instrument) |>
   summarize(count1 = n()) |>
   ungroup()
+
+print(filtered_full_data, n=210)
 
 #Each instrument is a line, x-axis is years (every 5), y-axis is number of instruments
 plot_instruments <- ggplot(data = filtered_full_data) + 
