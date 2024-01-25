@@ -142,10 +142,12 @@ rock_data <- filtered_genres |>
   filter(`Primary Genre` == "Rock")
 
 plot_guitar <- ggplot() +
-  geom_line(data = guitar_data, aes(x = Quinquennial, y = PercentageInstrument), color = "darkgreen", linewidth = 1.5) +
-  geom_line(data = rock_data, aes(x = Quinquennial, y = Percentage), color = "lightblue", linewidth = 1.5) +
+  geom_line(data = guitar_data, aes(x = Quinquennial, y = PercentageInstrument, color = "Guitar"), linewidth = 1.5) +
+  geom_line(data = rock_data, aes(x = Quinquennial, y = Percentage, color = "Rock"), linewidth = 1.5) +
   scale_y_continuous(sec.axis = dup_axis(name = "Guitar prevalence (%)")) +
-  labs(x= "Years", y="Rock prevalence (%)", title="Relationship between Rock and Guitar") +
+  scale_color_manual(values = c("Guitar" = "darkgreen", "Rock" = "lightblue")) +
+  labs(x= "Years", y="Rock prevalence (%)", title="Relationship between Rock and Guitar", color = "Legend") +
+  labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
   xlim(c(1960, 1995)) +
@@ -163,10 +165,12 @@ folk_data <- filtered_genres |>
   filter(`Primary Genre` == "Folk")
 
 plot_banjo <- ggplot() +
-  geom_line(data = banjo_data, aes(x = Quinquennial, y = PercentageInstrument), color = "orange3", linewidth = 1.5) +
-  geom_line(data = folk_data, aes(x = Quinquennial, y = Percentage), color = "magenta3", linewidth = 1.5) +
+  geom_line(data = banjo_data, aes(x = Quinquennial, y = PercentageInstrument, color = "Banjo"), linewidth = 1.5) +
+  geom_line(data = folk_data, aes(x = Quinquennial, y = Percentage, color = "Folk"), linewidth = 1.5) +
   scale_y_continuous(sec.axis = dup_axis(name = "Banjo prevalence (%)")) +
-  labs(x= "Years", y="Folk prevalence (%)", title="Relationship between Folk and Banjo") +
+  scale_color_manual(values = c("Banjo" = "orange3", "Folk" = "magenta3")) +
+  labs(x= "Years", y="Folk prevalence (%)", title="Relationship between Folk and Banjo", color = "Legend") +
+  labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
   xlim(c(1960, 1995)) +
@@ -184,10 +188,12 @@ house_data <- filtered_genres |>
   filter(`Primary Genre` == "House/Electronic/Trance")
 
 plot_software <- ggplot() +
-  geom_line(data = software_data, aes(x = Quinquennial, y = PercentageInstrument), color = "purple3", linewidth = 1.5) +
-  geom_line(data = house_data, aes(x = Quinquennial, y = Percentage), color = "grey", linewidth = 1.5) +
+  geom_line(data = software_data, aes(x = Quinquennial, y = PercentageInstrument, color = "Music software"), linewidth = 1.5) +
+  geom_line(data = house_data, aes(x = Quinquennial, y = Percentage, color = "House/Electronic/Trance"), linewidth = 1.5) +
   scale_y_continuous(sec.axis = dup_axis(name = "Music software prevalence (%)")) +
-  labs(x= "Years", y="House/Electronic/Trance prevalence (%)", title="Relationship between Electronic music and Music software") +
+  scale_color_manual(values = c("Music software" = "purple", "House/Electronic/Trance" = "grey")) +
+  labs(x= "Years", y="House/Electronic/Trance prevalence (%)", title="Relationship between Electronic music and Music software", color = "Legend") +
+  labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
   xlim(c(1960, 1995)) +
@@ -205,10 +211,12 @@ pop_data <- filtered_genres |>
   filter(`Primary Genre` == "Pop")
 
 plot_voice <- ggplot() +
-  geom_line(data = voice_data, aes(x = Quinquennial, y = PercentageInstrument), color = "red3", linewidth = 1.5) +
-  geom_line(data = pop_data, aes(x = Quinquennial, y = Percentage), color = "lightgreen", linewidth = 1.5) +
+  geom_line(data = voice_data, aes(x = Quinquennial, y = PercentageInstrument, color = "Voice"), linewidth = 1.5) +
+  geom_line(data = pop_data, aes(x = Quinquennial, y = Percentage, color = "Pop"), linewidth = 1.5) +
   scale_y_continuous(sec.axis = dup_axis(name = "Voice prevalence (%)")) +
-  labs(x= "Years", y="Pop prevalence (%)", title="Relationship between Pop and Voice") +
+  scale_color_manual(values = c(Pop = "lightgreen", Voice = "red3")) +
+  labs(x= "Years", y="Pop prevalence (%)", title="Relationship between Pop and Voice", color = "Legend") +
+  labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
   xlim(c(1960, 1995)) +
@@ -226,10 +234,12 @@ jazz_data <- filtered_genres |>
   filter(`Primary Genre` == "Jazz")
 
 plot_piano <- ggplot() +
-  geom_line(data = piano_data, aes(x = Quinquennial, y = PercentageInstrument), color = "blue3", linewidth = 1.5) +
-  geom_line(data = jazz_data, aes(x = Quinquennial, y = Percentage), color = "gold", linewidth = 1.5) +
+  geom_line(data = piano_data, aes(x = Quinquennial, y = PercentageInstrument, color = "Piano"), linewidth = 1.5) +
+  geom_line(data = jazz_data, aes(x = Quinquennial, y = Percentage, color = "Jazz"), linewidth = 1.5) +
+  scale_color_manual(values = c(Piano = "blue3", Jazz = "gold")) +
   scale_y_continuous(sec.axis = dup_axis(name = "Piano prevalence (%)")) +
-  labs(x= "Years", y="Jazz prevalence (%)", title="Relationship between Jazz and Piano") +
+  labs(x= "Years", y="Jazz prevalence (%)", title="Relationship between Jazz and Piano", color = "Legend") +
+  labs(fill = "Legend") +
   theme_light() +
   theme(plot.title = element_text(face="bold")) +
   xlim(c(1960, 1995)) +
