@@ -4,12 +4,12 @@ library(tidyr)
 library(cowplot)
 #------------------------------------GENRES-------------------------------------
 
-genre_data <- read_csv("Genre.csv")
+genre_data <- read_csv("Genre_New.csv")
 
 genres_filter <- genre_data |>
   pivot_longer(cols=-'Primary Genre', names_to="Year", values_to="Percentage") |>
   mutate(Year = as.numeric(Year)) |>
-  filter(Year >= 1958, Year <= 2002) |>
+  filter(Year >= 1956, Year <= 2012) |>
   mutate(Quinquiennial = round(Year/5)*5) |>
   select(-Year) |>
   mutate(Percentage = as.numeric(str_replace(Percentage, "%", ""))) |>
@@ -17,17 +17,19 @@ genres_filter <- genre_data |>
   group_by(Quinquiennial, `Primary Genre`) |>
   summarise(Percentage = mean(Percentage)) 
 
-# Plotting data with geom lind
+# Plotting data with geom line
 plot_genres <- ggplot(data = genres_filter, aes(x = Quinquiennial, y = Percentage, color = `Primary Genre`)) + 
-  geom_line(linewidth = 1.2) +
-  labs(x= "Years", y="Percentage of Hot 100 entry", title="Top Genres between 1960 and 2000") +
+  geom_line(linewidth = 1) +
+  labs(x= "Years", y="Percentage of songs in Hot 100", title="Top Genres between 1960 and 2000") +
+  xlim(c(1960, 2000)) +
   theme_light() +
   theme(plot.title = element_text(face="bold"))+
   scale_color_manual(values = c(
-    "House/Electronic/Trance" = "blue",
+    "House/Electronic/Trance" = "lightgrey",
     "Jazz" = "gold",
-    "Pop" = "purple3",
-    "Rock" = "forestgreen"
+    "Pop" = "lightgreen",
+    "Rock" = "lightblue",
+    "Folk" = "magenta3"
   ))
 
 ggsave("Genres.pdf")
@@ -40,7 +42,7 @@ full_data <-read_csv('MET2J_filtered_instruments.csv')
 filtered_full_data <- full_data |>
   na.omit() |>
   mutate(`Date of Birth` = as.numeric(`Date of Birth`)) |>
-  filter(`Date of Birth` >= 1958, `Date of Birth` <= 2002) |>
+  filter(`Date of Birth` >= 1956, `Date of Birth` <= 2012) |>
   mutate(Quinquiennial = round(`Date of Birth`/5)*5) |>
   select(-`Date of Birth`) |>
   mutate(Instrument = recode(Instrument,"Singing"= "Voice", "Microphone" = "Voice", 
@@ -94,10 +96,12 @@ filtered_full_data <- full_data |>
                              "Noble & Cooley" = "Drums", "Tom-tom drum" = "Drums", 
                              "Mapex Drums" = "Drums", "Drum kit" = "Drums", "Ludwig Drums" = "Drums" )) |>
   mutate(Instrument = recode(Instrument, "Types of trombone" = "Trombone", "C.G. Conn" = "Trombone")) |>
+ 
   #Choosing the relevant instruments 
-  #filter(Instrument == "Piano" | Instrument == "Guitar" | Instrument =="Music software" | 
-           #Instrument == "Banjo") |>
-  #Counting instruments per every five years to plot e.g. 'total guitars in 1965' 
+  filter(Instrument == "Piano" | Instrument == "Guitar" | Instrument =="Music software" | 
+           Instrument == "Banjo" | Instrument == "Voice") |>
+ 
+  #Counting instruments per every five years to plot e.g. 'total guitarrists in 1965' 
   group_by(Quinquiennial, Instrument) |>
   summarize(count1 = n()) |>
   ungroup()
@@ -105,15 +109,17 @@ filtered_full_data <- full_data |>
 #Each instrument is a line, x-axis is years (every 5), y-axis is number of instruments
 plot_instruments <- ggplot(data = filtered_full_data) + 
   aes(x = Quinquiennial, y = count1, color = Instrument, group = Instrument) +
-  geom_line(linewidth = 1.2) +
+  geom_line(linewidth = 1) +
   labs(x= "Years", y="Instrument count", title="Instruments use count between 1960 and 2000") +
+  xlim(c(1960, 2000)) + 
   theme_light() +
   theme(plot.title = element_text(face="bold"))+
   scale_color_manual(values = c(
-    "Music software" = "blue",
-    "Piano" = "gold",
-    "Banjo" = "purple3",
-    "Guitar" = "forestgreen"
+    "Music software" = "purple3",
+    "Piano" = "blue3",
+    "Banjo" = "gold3",
+    "Guitar" = "darkgreen",
+    "Voice" = "indianred3"
   ))
 
 ggsave("Instruments.pdf")
