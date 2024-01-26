@@ -81,17 +81,17 @@ filtered_instruments <- full_data |>
 plot_instruments <- ggplot(data = filtered_instruments) +
   aes(x = Quinquennial, y = PercentageInstrument, color = Instrument, group = Instrument) +
   geom_line(linewidth = 1) +
-  labs(x = "Years", y = "Percentage") +
+  labs(x = "Date of Birth (Years)", y = "Instrument use over total instrument use (%)") +
   xlim(c(1960, 1995)) +
   ylim(c(0, 35)) +
   theme_light() +
   theme(plot.title = element_text(face="bold"))+
   scale_color_manual(values = c(
-    "Music software" = "purple3",
-    "Piano" = "blue3",
+    "Music software" = "plum4",
+    "Piano" = "navyblue",
     "Banjo" = "orange3",
-    "Guitar" = "darkgreen",
-    "Voice" = "indianred3"
+    "Guitar" = "palegreen4",
+    "Voice" = "red4"
   ))
 ggsave("Instruments.pdf", width = 12, height = 8, units = "cm")
 
@@ -115,16 +115,16 @@ filtered_genres <- genre_data |>
 #Plotting data with geom line
 plot_genres <- ggplot(data = filtered_genres, aes(x = Quinquennial, y = Percentage, color = `Primary Genre`)) +
   geom_line(linewidth = 1) +
-  labs(x= "Years", y="Percentage of songs in Billboard 100") +
+  labs(x= "Ranking Year (Years)", y="Genre in Billboard 100 (%)") +
   xlim(c(1960, 1995)) +
   theme_light() +
   theme(plot.title = element_text(face="bold"))+
   scale_color_manual(values = c(
-    "House/Electronic/Trance" = "grey",
-    "Jazz" = "gold",
-    "Pop" = "lightgreen",
-    "Rock" = "lightblue",
-    "Folk" = "magenta3"
+    "House/Electronic/Trance" = "thistle",
+    "Jazz" = "lightskyblue1",
+    "Pop" = "sienna2",
+    "Rock" = "lightgreen",
+    "Folk" = "gold2"
   ))
 ggsave("Genres.pdf", width = 12, height = 8, units = "cm")
 
@@ -144,17 +144,15 @@ rock_data <- filtered_genres |>
 plot_guitar <- ggplot() +
   geom_line(data = guitar_data, aes(x = Quinquennial, y = PercentageInstrument, color = "Guitar"), linewidth = 1.5) +
   geom_line(data = rock_data, aes(x = Quinquennial, y = Percentage, color = "Rock"), linewidth = 1.5) +
-  scale_y_continuous(sec.axis = dup_axis(name = "Guitar prevalence (%)")) +
-  scale_color_manual(values = c("Guitar" = "darkgreen", "Rock" = "lightblue")) +
-  labs(x= "Years", y="Rock prevalence (%)", title="", color = "Legend") +
+  scale_y_continuous(sec.axis = dup_axis(name = "Guitar prevalence in instrument use (%)")) +
+  scale_color_manual(values = c("Guitar" = "palegreen4", "Rock" = "lightgreen")) +
+  labs(x= "Ranking Year/Date of Birth (Years)", y="Rock prevalence in Billboard (%)", title="", color = "Legend") +
   labs(fill = "Legend") +
   theme_light() +
-  theme(plot.title = element_text(face="bold")) +
-  xlim(c(1960, 1995)) +
-  geom_segment(aes(x = 1990, y = 0, xend = 1990, yend = 30),linetype="dashed", color = "black") +
-  geom_segment(aes(x = 1985, y = 0, xend = 1985, yend = 58),linetype="dashed", color = "black")
+  theme(plot.title = element_text(face="bold"), axis.title.y = element_text(size=8)) +
+  xlim(c(1960, 1995)) 
 
-ggsave("Rock-Guitar.pdf")
+ggsave("Rock-Guitar.pdf") 
 
 #----------- - - - - -
 
@@ -167,17 +165,14 @@ folk_data <- filtered_genres |>
 plot_banjo <- ggplot() +
   geom_line(data = banjo_data, aes(x = Quinquennial, y = PercentageInstrument, color = "Banjo"), linewidth = 1.5) +
   geom_line(data = folk_data, aes(x = Quinquennial, y = Percentage, color = "Folk"), linewidth = 1.5) +
-  scale_y_continuous(sec.axis = dup_axis(name = "Banjo prevalence (%)")) +
-  scale_color_manual(values = c("Banjo" = "orange3", "Folk" = "magenta3")) +
-  labs(x= "Years", y="Folk prevalence (%)", title="", color = "Legend") +
-  labs(fill = "Legend") +
+  scale_y_continuous(sec.axis = dup_axis(name = "Banjo prevalence in instrument use (%)")) +
+  scale_color_manual(values = c("Banjo" = "orange3", "Folk" = "gold2")) +
+  labs(x= "Ranking Year/Date of Birth (Years)", y="Folk prevalence in Billboard (%)", title="", color = "Legend") +
   theme_light() +
-  theme(plot.title = element_text(face="bold")) +
-  xlim(c(1960, 1995)) +
-  geom_segment(aes(x = 1975, y = 0, xend = 1975, yend = 6.9),linetype="dashed", color = "black") +
-  geom_segment(aes(x = 1980, y = 0, xend = 1980, yend = 5.1),linetype="dashed", color = "black")
+  theme(plot.title = element_text(face="bold"), axis.title.y = element_text(size=8)) +
+  xlim(c(1960, 1995)) 
 
-ggsave("Folk-Banjo.pdf")
+ggsave("Folk-Banjo.pdf") 
 
 #----------- - - - - -
 
@@ -190,17 +185,15 @@ house_data <- filtered_genres |>
 plot_software <- ggplot() +
   geom_line(data = software_data, aes(x = Quinquennial, y = PercentageInstrument, color = "Music software"), linewidth = 1.5) +
   geom_line(data = house_data, aes(x = Quinquennial, y = Percentage, color = "House/Electronic/Trance"), linewidth = 1.5) +
-  scale_y_continuous(sec.axis = dup_axis(name = "Music software prevalence (%)")) +
-  scale_color_manual(values = c("Music software" = "purple", "House/Electronic/Trance" = "grey")) +
-  labs(x= "Years", y="Electronic Music prevalence (%)", color = "Legend") +
+  scale_y_continuous(sec.axis = dup_axis(name = "Music software prevalence in instrument use (%)")) +
+  scale_color_manual(values = c("Music software" = "plum4", "House/Electronic/Trance" = "thistle")) +
+  labs(x= "Ranking Year/Date of Birth (Years)", y="Electronic Music prevalence in Billboard (%)", color = "Legend") +
   labs(fill = "Legend") +
   theme_light() +
-  theme(plot.title = element_text(face="bold")) +
-  xlim(c(1960, 1995)) +
-  geom_segment(aes(x = 1990, y = 0, xend = 1990, yend = 11.25),linetype="dashed", color = "black") +
-  geom_segment(aes(x = 1990, y = 0, xend = 1990, yend = 4),linetype="dashed", color = "black")
+  theme(plot.title = element_text(face="bold"), axis.title.y = element_text(size=8)) +
+  xlim(c(1960, 1995)) 
 
-ggsave("Electronic-Software.pdf")
+ggsave("ElectronicMusic-MusicSoftware.pdf") 
 
 #----------- - - - - -
 
@@ -213,17 +206,15 @@ pop_data <- filtered_genres |>
 plot_voice <- ggplot() +
   geom_line(data = voice_data, aes(x = Quinquennial, y = PercentageInstrument, color = "Voice"), linewidth = 1.5) +
   geom_line(data = pop_data, aes(x = Quinquennial, y = Percentage, color = "Pop"), linewidth = 1.5) +
-  scale_y_continuous(sec.axis = dup_axis(name = "Voice prevalence (%)")) +
-  scale_color_manual(values = c(Pop = "lightgreen", Voice = "red3")) +
-  labs(x= "Years", y="Pop prevalence (%)", title= "", color = "Legend") +
+  scale_y_continuous(sec.axis = dup_axis(name = "Voice prevalence in instrument use (%)")) +
+  scale_color_manual(values = c(Pop = "sienna2", Voice = "red4")) +
+  labs(x= "Ranking Year/Date of Birth (Years)", y="Pop prevalence in Billboard (%)", title= "", color = "Legend") +
   labs(fill = "Legend") +
   theme_light() +
-  theme(plot.title = element_text(face="bold")) +
-  xlim(c(1960, 1995)) +
-  geom_segment(aes(x = 1995, y = 0, xend = 1995, yend = 32),linetype="dashed", color = "black") +
-  geom_segment(aes(x = 1990, y = 0, xend = 1990, yend = 24),linetype="dashed", color = "black")
+  theme(plot.title = element_text(face="bold"), axis.title.y = element_text(size=8)) +
+  xlim(c(1960, 1995)) 
 
-ggsave("Pop-Voice.pdf")
+ggsave("Pop-Voice.pdf") 
 
 #----------- - - - - -
 
@@ -236,24 +227,21 @@ jazz_data <- filtered_genres |>
 plot_piano <- ggplot() +
   geom_line(data = piano_data, aes(x = Quinquennial, y = PercentageInstrument, color = "Piano"), linewidth = 1.5) +
   geom_line(data = jazz_data, aes(x = Quinquennial, y = Percentage, color = "Jazz"), linewidth = 1.5) +
-  scale_color_manual(values = c(Piano = "blue3", Jazz = "gold")) +
-  scale_y_continuous(sec.axis = dup_axis(name = "Piano prevalence (%)")) +
-  labs(x= "Years", y="Jazz prevalence (%)", title="", color = "Legend") +
+  scale_color_manual(values = c(Piano = "navyblue", Jazz = "lightskyblue1")) +
+  scale_y_continuous(sec.axis = dup_axis(name = "Piano prevalence in instrument use (%)")) +
+  labs(x= "Ranking Year/Date of Birth (Years)", y="Jazz prevalence in Billboard (%)", color = "Legend") +
   labs(fill = "Legend") +
   theme_light() +
-  theme(plot.title = element_text(face="bold")) +
-  xlim(c(1960, 1995)) +
-  geom_segment(aes(x = 1960, y = 0, xend = 1960, yend = 3),linetype="dashed", color = "black") +
-  geom_segment(aes(x = 1980, y = 0, xend = 1980, yend = 12.3),linetype="dashed", color = "black")
+  theme(plot.title = element_text(face="bold"), axis.title.y = element_text(size=8)) +
+  xlim(c(1960, 1995))
 
-ggsave("Jazz-Piano.pdf")
-
+ggsave("Jazz-Piano.pdf") 
 
 #--------------------COMBINING ALL DIFFERENT INDIVIDUAL GRAPHS------------------
 
-plot_grid(plot_guitar, plot_banjo, plot_software, plot_voice, plot_piano, nrow = 5, align = "v", rel_heights = 1)
+plot_grid(plot_guitar, plot_banjo, plot_software, plot_voice, nrow = 4, align = "v", rel_heights = 1)
 
-ggsave("Comparison_Plot1.pdf",height = 10, width = 8)
+ggsave("Comparison_Plot_Pairs.pdf",height = 10, width = 8)
 
 
 
