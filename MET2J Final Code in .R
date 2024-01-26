@@ -93,7 +93,7 @@ plot_instruments <- ggplot(data = filtered_instruments) +
     "Guitar" = "palegreen4",
     "Voice" = "red4"
   ))
-ggsave("Instruments.pdf", width = 12, height = 8, units = "cm")
+ggsave("Instruments.pdf", width = 14, height = 10, units = "cm")
 
 #------------------------------------GENRES-------------------------------------
 
@@ -126,7 +126,7 @@ plot_genres <- ggplot(data = filtered_genres, aes(x = Quinquennial, y = Percenta
     "Rock" = "lightgreen",
     "Folk" = "gold2"
   ))
-ggsave("Genres.pdf", width = 12, height = 8, units = "cm")
+ggsave("Genres.pdf", width = 14, height = 10, units = "cm")
 
 #----------------------DOUBLE PLOT: INSTRUMENTS & GENRES------------------------
 
@@ -241,7 +241,7 @@ ggsave("Jazz-Piano.pdf")
 
 plot_grid(plot_guitar, plot_banjo, plot_software, plot_voice, nrow = 4, align = "v", rel_heights = 1)
 
-ggsave("Comparison_Plot_Pairs.pdf",height = 10, width = 8)
+ggsave("Comparison_Plot_Pairs.pdf", height = 10, width = 8)
 
 
 
